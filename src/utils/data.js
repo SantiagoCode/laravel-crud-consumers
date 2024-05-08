@@ -24,8 +24,8 @@ const fetchApi = {
 
 		return response.json();
 	},
-	simpleGET: async (endpoint, token) => {
-		const response = await fetch(`${URL}/${endpoint}`, {
+	simpleGET: async (endpoint, token, id = '') => {
+		const response = await fetch(`${URL}/${endpoint}/${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
