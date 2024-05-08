@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Nav from './../components/Nav';
 import { fetchApi } from './../utils/data.js';
+
 import './../assets/modules/form.module.css';
 
 const Register = () => {
@@ -24,13 +25,19 @@ const Register = () => {
 		};
 
 		fetchApi
-			.simplePOST(data, 'register')
+			.simplePOST('register', data)
 			.then((response) => {
-				console.log('Registered successfully');
-				window.location.href = '/login';
+				try {
+					if (response.error) throw new Error(response.error);
+					window.location.href = '/login';
+				} catch (error) {
+					console.error(error);
+					alert('Error: ' + error.message || 'An error occurred. Please try again.');
+				}
 			})
 			.catch((error) => {
 				console.error(error);
+				alert('Error: ' + error.message || 'An error occurred. Please try again.');
 			});
 	};
 
@@ -39,17 +46,23 @@ const Register = () => {
 			<Nav />
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name'>Name</label>
-				<input type='text' name='name' id='name' value={name} onChange={(e) => setName(e.target.value)} />
+				<input type='text' name='name' id='name' defaultValue={name} onChange={(e) => setName(e.target.value)} />
 				<label htmlFor='email'>Email</label>
-				<input type='email' name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+				<input type='email' name='email' id='email' defaultValue={email} onChange={(e) => setEmail(e.target.value)} />
 				<label htmlFor='phone'>Phone</label>
-				<input type='text' name='phone' id='phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
+				<input type='text' name='phone' id='phone' defaultValue={phone} onChange={(e) => setPhone(e.target.value)} />
 				<label htmlFor='address'>Address</label>
-				<input type='text' name='address' id='address' value={address} onChange={(e) => setAddress(e.target.value)} />
+				<input type='text' name='address' id='address' defaultValue={address} onChange={(e) => setAddress(e.target.value)} />
 				<label htmlFor='password'>Password</label>
-				<input type='password' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+				<input type='password' name='password' id='password' defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
 				<label htmlFor='passwordConfirmed'>Confirm Password</label>
-				<input type='password' name='passwordConfirmed' id='passwordConfirmed' value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} />
+				<input
+					type='password'
+					name='passwordConfirmed'
+					id='passwordConfirmed'
+					defaultValue={passwordConfirmed}
+					onChange={(e) => setPasswordConfirmed(e.target.value)}
+				/>
 
 				<button type='submit'>Register</button>
 			</form>

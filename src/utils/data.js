@@ -1,13 +1,37 @@
 const URL = 'http://localhost:8000/api/students';
 
 const fetchApi = {
-	simplePOST: async (data, endpoint) => {
+	simplePOST: async (endpoint, data) => {
 		const response = await fetch(`${URL}/${endpoint}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
+		});
+
+		return response.json();
+	},
+	tokenPOST: async (endpoint, data, token) => {
+		const response = await fetch(`${URL}/${endpoint}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		});
+
+		return response.json();
+	},
+	simpleGET: async (endpoint, data, token) => {
+		const response = await fetch(`${URL}/${endpoint}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${data.token}`,
+				Accept: 'application/json',
+			},
 		});
 
 		return response.json();
