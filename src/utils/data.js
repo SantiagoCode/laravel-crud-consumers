@@ -37,6 +37,18 @@ const fetchApi = {
 
 		return response.json();
 	},
+	PATCH: async (id, data) => {
+		const response = await fetch(`${URL}/${id}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${Cookies.get('access_token')}`,
+			},
+			body: JSON.stringify(data),
+		});
+
+		return response.json();
+	},
 	simpleDELETE: async (id) => {
 		const response = await fetch(`${URL}/${id}`, {
 			method: 'DELETE',

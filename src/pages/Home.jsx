@@ -3,11 +3,13 @@ import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
 import Cookies from 'js-cookie';
 import DeleteBtn from '../components/DeleteBtn.jsx';
+import EditBtn from '../components/EditBtn.jsx';
 import './../assets/modules/table.module.css';
 
 const Home = () => {
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [edit, setEdit] = useState(0);
 	const user = Cookies.get('user');
 
 	useEffect(() => {
@@ -53,15 +55,35 @@ const Home = () => {
 					<tbody>
 						{students.map((student) => (
 							<tr key={student.id}>
-								<td>{student.id}</td>
-								<td>{student.name}</td>
-								<td>{student.email}</td>
-								<td>{student.phone}</td>
-								<td>{student.address}</td>
+								{!edit || student.id !== edit ? (
+									<>
+										<td data-user={student.id}>{student.id}</td>
+										<td data-user={student.id}>{student.name}</td>
+										<td data-user={student.id}>{student.email}</td>
+										<td data-user={student.id}>{student.phone}</td>
+										<td data-user={student.id}>{student.address}</td>
+									</>
+								) : (
+									<>
+										<td data-user={student.id}>{student.id}</td>
+										<td data-user={student.id}>
+											<input name='name' autoComplete='false' defaultValue={student.name} />
+										</td>
+										<td data-user={student.id}>
+											<input name='email' autoComplete='false' defaultValue={student.email} />
+										</td>
+										<td data-user={student.id}>
+											<input name='phone' autoComplete='false' defaultValue={student.phone} />
+										</td>
+										<td data-user={student.id}>
+											<input name='address' autoComplete='false' defaultValue={student.address} />
+										</td>
+									</>
+								)}
 								<td>
 									<div className='buttons'>
 										<DeleteBtn id={student.id} list={[...students]} setList={setStudents} />
-										{/* <EditBtn id={student.id} /> */}
+										<EditBtn id={student.id} edit={edit} setEdit={setEdit} setList={setStudents} />
 									</div>
 								</td>
 							</tr>
