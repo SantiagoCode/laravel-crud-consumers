@@ -6,6 +6,7 @@ const LogoutBtn = () => {
 		<button
 			onClick={() => {
 				Cookies.remove('access_token');
+				Cookies.remove('user');
 				window.location.href = '/login';
 			}}>
 			Logout

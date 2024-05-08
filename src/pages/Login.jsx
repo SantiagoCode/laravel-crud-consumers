@@ -27,7 +27,8 @@ const Login = () => {
 					if (response.error) throw new Error(response.error);
 
 					Cookies.set('access_token', response.access_token);
-					console.log('access_token', response.access_token);
+					Cookies.set('user', JSON.stringify(response.user));
+
 					window.location.href = '/';
 				} catch (error) {
 					console.error(error);

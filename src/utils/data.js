@@ -24,12 +24,12 @@ const fetchApi = {
 
 		return response.json();
 	},
-	simpleGET: async (endpoint, data, token) => {
+	simpleGET: async (endpoint, token) => {
 		const response = await fetch(`${URL}/${endpoint}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${data.token}`,
+				Authorization: `Bearer ${token}`,
 				Accept: 'application/json',
 			},
 		});
