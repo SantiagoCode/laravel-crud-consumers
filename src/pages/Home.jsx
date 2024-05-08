@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
 import Cookies from 'js-cookie';
+import DeleteBtn from '../components/DeleteBtn.jsx';
 import './../assets/modules/table.module.css';
 
 const Home = () => {
@@ -11,7 +12,7 @@ const Home = () => {
 
 	useEffect(() => {
 		fetchApi
-			.simpleGET('', Cookies.get('access_token'))
+			.simpleGET()
 			.then((response) => {
 				try {
 					if (response.error) throw new Error(response.error);
@@ -46,6 +47,7 @@ const Home = () => {
 							<th>Email</th>
 							<th>Phone</th>
 							<th>Address</th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +58,12 @@ const Home = () => {
 								<td>{student.email}</td>
 								<td>{student.phone}</td>
 								<td>{student.address}</td>
+								<td>
+									<div className='buttons'>
+										<DeleteBtn id={student.id} list={[...students]} setList={setStudents} />
+										{/* <EditBtn id={student.id} /> */}
+									</div>
+								</td>
 							</tr>
 						))}
 					</tbody>
