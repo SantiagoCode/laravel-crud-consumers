@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Nav from './../components/Nav';
+import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
-
 import './../assets/modules/form.module.css';
 
 const Register = () => {
@@ -42,8 +41,7 @@ const Register = () => {
 	};
 
 	return (
-		<>
-			<Nav />
+		<Global_Layout>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='name'>Name</label>
 				<input type='text' name='name' id='name' defaultValue={name} onChange={(e) => setName(e.target.value)} />
@@ -66,7 +64,7 @@ const Register = () => {
 
 				<button type='submit'>Register</button>
 			</form>
-		</>
+		</Global_Layout>
 	);
 };
 

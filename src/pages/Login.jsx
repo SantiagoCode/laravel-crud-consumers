@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Nav from './../components/Nav';
+import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
 import Cookies from 'js-cookie';
 import './../assets/modules/form.module.css';
@@ -42,8 +42,7 @@ const Login = () => {
 	};
 
 	return (
-		<>
-			<Nav />
+		<Global_Layout>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='email'>Email</label>
 				<input type='email' name='email' id='email' defaultValue={email} onChange={(e) => setEmail(e.target.value)} />
@@ -51,7 +50,7 @@ const Login = () => {
 				<input type='password' name='password' id='password' defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
 				<button type='submit'>Login</button>
 			</form>
-		</>
+		</Global_Layout>
 	);
 };
 

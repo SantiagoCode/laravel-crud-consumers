@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Nav from '../components/Nav';
+import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
 import Cookies from 'js-cookie';
+import './../assets/modules/table.module.css';
 
 const Home = () => {
 	const [students, setStudents] = useState([]);
@@ -31,8 +32,7 @@ const Home = () => {
 	}, []);
 
 	return (
-		<>
-			<Nav />
+		<Global_Layout>
 			<h1>Hello, {JSON.parse(user).name}</h1>
 
 			{loading ? (
@@ -61,7 +61,7 @@ const Home = () => {
 					</tbody>
 				</table>
 			)}
-		</>
+		</Global_Layout>
 	);
 };
 
