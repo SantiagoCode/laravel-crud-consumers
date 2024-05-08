@@ -67,16 +67,16 @@ const Home = () => {
 									<>
 										<td data-user={student.id}>{student.id}</td>
 										<td data-user={student.id}>
-											<input name='name' autoComplete='false' defaultValue={student.name} />
+											<input name='name' autoComplete='false' defaultValue={student.name} type='string' />
 										</td>
 										<td data-user={student.id}>
-											<input name='email' autoComplete='false' defaultValue={student.email} />
+											<input name='email' autoComplete='false' defaultValue={student.email} type='email' />
 										</td>
 										<td data-user={student.id}>
-											<input name='phone' autoComplete='false' defaultValue={student.phone} />
+											<input name='phone' autoComplete='false' defaultValue={student.phone} type='number' />
 										</td>
 										<td data-user={student.id}>
-											<input name='address' autoComplete='false' defaultValue={student.address} />
+											<input name='address' autoComplete='false' defaultValue={student.address} type='string' />
 										</td>
 									</>
 								)}
