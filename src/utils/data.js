@@ -18,12 +18,13 @@ const fetchApi = {
 		try {
 			const response = await fetch(`${URL}${endpoint ? '/' + endpoint : ''}${id ? '/' + id : ''}`, options);
 			if (!response.ok) {
+				handleErrors(response);
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 
 			return await response.json();
 		} catch (error) {
-			console.error('There was a problem with the fetch operation: ', error);
+			console.error(error);
 		}
 	},
 	simplePOST: function (endpoint, data) {
@@ -41,6 +42,23 @@ const fetchApi = {
 	simpleDELETE: function (id) {
 		return this.request('DELETE', '', id);
 	},
+};
+
+const handleErrors = (response) => {
+	const statusMessages = {
+		401: 'Credenciales incorrectas. Por favor verifique e intente de nuevo.',
+		404: 'El recurso solicitado no se encontró.',
+		500: 'Error interno del servidor. Por favor, inténtelo de nuevo mas tarde.',
+	};
+
+	if (statusMessages[response.status]) {
+		alert(statusMessages[response.status]);
+		if (response.status === 401) {
+			window.location.href = '/login';
+		}
+	} else if (!response.ok) {
+		alert('Error desconocido. Por favor, inténtelo de nuevo mas tarde.');
+	}
 };
 
 export { fetchApi };

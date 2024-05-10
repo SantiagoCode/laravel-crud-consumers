@@ -23,16 +23,12 @@ const Login = () => {
 		try {
 			const response = await fetchApi.simplePOST('login', data);
 
-			if (!response) throw new Error('No response received');
-			if (response.error) throw new Error(response.error);
-
 			Cookies.set('access_token', response.access_token);
 			Cookies.set('user', JSON.stringify(response.user));
 
 			window.location.href = '/';
 		} catch (error) {
 			console.error(error);
-			alert('Error: ' + error.message || 'An error occurred. Please try again.');
 		}
 	};
 

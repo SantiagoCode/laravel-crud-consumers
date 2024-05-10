@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { fetchApi } from '../utils/data';
 import Global_Layout from '../components/Global_Layout';
-import EditBtn from '../components/EditBtn';
-import DeleteBtn from '../components/DeleteBtn';
+import UserTable from '../components/UserTable';
 import Cookies from 'js-cookie';
+import ContentLoader from 'react-content-loader';
 import './../assets/modules/table.module.css';
 
 const Home = () => {
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [edit, setEdit] = useState(null);
-	const user = Cookies.get('user');
+	const userCookies = Cookies.get('user');
+	const user = JSON.parse(userCookies);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -34,63 +35,30 @@ const Home = () => {
 
 	return (
 		<Global_Layout>
-			<h1>Hello, {JSON.parse(user).name}</h1>
-
-			{loading ? (
-				<p>Loading...</p>
-			) : (
-				<table>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Phone</th>
-							<th>Address</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{students.map((student) => (
-							<tr key={student.id}>
-								{!edit || student.id !== edit ? (
-									<>
-										<td data-user={student.id}>{student.id}</td>
-										<td data-user={student.id}>{student.name}</td>
-										<td data-user={student.id}>{student.email}</td>
-										<td data-user={student.id}>{student.phone}</td>
-										<td data-user={student.id}>{student.address}</td>
-									</>
-								) : (
-									<>
-										<td data-user={student.id}>{student.id}</td>
-										<td data-user={student.id}>
-											<input name='name' autoComplete='false' defaultValue={student.name} type='string' />
-										</td>
-										<td data-user={student.id}>
-											<input name='email' autoComplete='false' defaultValue={student.email} type='email' />
-										</td>
-										<td data-user={student.id}>
-											<input name='phone' autoComplete='false' defaultValue={student.phone} type='number' />
-										</td>
-										<td data-user={student.id}>
-											<input name='address' autoComplete='false' defaultValue={student.address} type='string' />
-										</td>
-									</>
-								)}
-								<td>
-									<div className='buttons'>
-										<DeleteBtn id={student.id} list={[...students]} setList={setStudents} />
-										<EditBtn id={student.id} edit={edit} setEdit={setEdit} setList={setStudents} />
-									</div>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			)}
+			<h1>Hello, {user.name}</h1>
+			{true ? <TableSkeleton /> : <UserTable students={students} setStudents={setStudents} edit={edit} setEdit={setEdit} />}
 		</Global_Layout>
 	);
 };
 
 export default Home;
+
+const TableSkeleton = (props) => (
+	<ContentLoader speed={2} width={720} height={300} viewBox='0 0 720 300' backgroundColor='#f3f3f3' foregroundColor='#ecebeb' {...props}>
+		<circle cx='24' cy='24' r='20' />
+		<rect x='61' y='11' rx='5' ry='5' width='546' height='25' />
+		<circle cx='24' cy='98' r='20' />
+		<rect x='61' y='86' rx='5' ry='5' width='546' height='25' />
+		<circle cx='24' cy='172' r='20' />
+		<rect x='61' y='160' rx='5' ry='5' width='546' height='25' />
+		<circle cx='24' cy='247' r='20' />
+		<rect x='61' y='234' rx='5' ry='5' width='546' height='25' />
+	</ContentLoader>
+);
+
+TableSkeleton.metadata = {
+	name: 'Sridhar Easwaran',
+	github: 'sridhareaswaran',
+	description: 'Dashboard pages',
+	filename: 'TableSkeleton',
+};
