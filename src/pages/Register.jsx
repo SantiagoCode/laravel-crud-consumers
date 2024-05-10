@@ -11,7 +11,7 @@ const Register = () => {
 	const [password, setPassword] = useState('');
 	const [passwordConfirmed, setPasswordConfirmed] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const data = {
@@ -23,21 +23,17 @@ const Register = () => {
 			password_confirmation: passwordConfirmed,
 		};
 
-		fetchApi
-			.simplePOST('register', data)
-			.then((response) => {
-				try {
-					if (response.error) throw new Error(response.error);
-					window.location.href = '/login';
-				} catch (error) {
-					console.error(error);
-					alert('Error: ' + error.message || 'An error occurred. Please try again.');
-				}
-			})
-			.catch((error) => {
-				console.error(error);
-				alert('Error: ' + error.message || 'An error occurred. Please try again.');
-			});
+		try {
+			const response = await fetchApi.simplePOST('register', data);
+
+			if (!response) throw new Error('No response received');
+			if (response.error) throw new Error(response.error);
+
+			window.location.href = '/login';
+		} catch (error) {
+			console.error(error);
+			alert('Error: ' + error.message || 'An error occurred. Please try again.');
+		}
 	};
 
 	return (
@@ -61,7 +57,6 @@ const Register = () => {
 					defaultValue={passwordConfirmed}
 					onChange={(e) => setPasswordConfirmed(e.target.value)}
 				/>
-
 				<button type='submit'>Register</button>
 			</form>
 		</Global_Layout>

@@ -12,7 +12,7 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const data = {
@@ -20,25 +20,20 @@ const Login = () => {
 			password: password,
 		};
 
-		fetchApi
-			.simplePOST('login', data)
-			.then((response) => {
-				try {
-					if (response.error) throw new Error(response.error);
+		try {
+			const response = await fetchApi.simplePOST('login', data);
 
-					Cookies.set('access_token', response.access_token);
-					Cookies.set('user', JSON.stringify(response.user));
+			if (!response) throw new Error('No response received');
+			if (response.error) throw new Error(response.error);
 
-					window.location.href = '/';
-				} catch (error) {
-					console.error(error);
-					alert('Error: ' + error.message || 'An error occurred. Please try again.');
-				}
-			})
-			.catch((error) => {
-				console.error(error);
-				alert('Error: ' + error.message || 'An error occurred. Please try again.');
-			});
+			Cookies.set('access_token', response.access_token);
+			Cookies.set('user', JSON.stringify(response.user));
+
+			window.location.href = '/';
+		} catch (error) {
+			console.error(error);
+			alert('Error: ' + error.message || 'An error occurred. Please try again.');
+		}
 	};
 
 	return (

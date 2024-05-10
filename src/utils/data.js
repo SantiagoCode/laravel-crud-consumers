@@ -2,63 +2,44 @@ const URL = 'http://localhost:8000/api/students';
 import Cookies from 'js-cookie';
 
 const fetchApi = {
-	simplePOST: async (endpoint, data) => {
-		const response = await fetch(`${URL}/${endpoint}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		});
-
-		return response.json();
-	},
-	tokenPOST: async (endpoint = '', data) => {
-		const response = await fetch(`${URL}/${endpoint}`, {
-			method: 'POST',
+	request: async (method, endpoint = '', id = '', data = null) => {
+		const options = {
+			method: method,
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${Cookies.get('access_token')}`,
 			},
-			body: JSON.stringify(data),
-		});
+		};
 
-		return response.json();
+		if (data) {
+			options.body = JSON.stringify(data);
+		}
+
+		try {
+			const response = await fetch(`${URL}${endpoint ? '/' + endpoint : ''}${id ? '/' + id : ''}`, options);
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			return await response.json();
+		} catch (error) {
+			console.error('There was a problem with the fetch operation: ', error);
+		}
 	},
-	simpleGET: async (endpoint = '', id = '') => {
-		const response = await fetch(`${URL}/${endpoint}/${id}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${Cookies.get('access_token')}`,
-				Accept: 'application/json',
-			},
-		});
-
-		return response.json();
+	simplePOST: function (endpoint, data) {
+		return this.request('POST', endpoint, '', data);
 	},
-	PATCH: async (id, data) => {
-		const response = await fetch(`${URL}/${id}`, {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${Cookies.get('access_token')}`,
-			},
-			body: JSON.stringify(data),
-		});
-
-		return response.json();
+	GET: function () {
+		return this.request('GET');
 	},
-	simpleDELETE: async (id) => {
-		const response = await fetch(`${URL}/${id}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${Cookies.get('access_token')}`,
-			},
-		});
-
-		return response.json();
+	simpleGET: function (id) {
+		return this.request('GET', '', id);
+	},
+	PATCH: function (id, data) {
+		return this.request('PATCH', '', id, data);
+	},
+	simpleDELETE: function (id) {
+		return this.request('DELETE', '', id);
 	},
 };
 
