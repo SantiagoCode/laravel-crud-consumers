@@ -24,7 +24,7 @@ Within the project, you will find three folders, each corresponding to a differe
 
 Follow the subsequent steps within each folder to set up the respective framework:
 
-Navigate to the `react` directory
+Navigate to the directory you want to start
 
 ```bash
 cd [application_name]
