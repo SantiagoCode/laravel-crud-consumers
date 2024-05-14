@@ -16,7 +16,7 @@ All three applications consume the [`laravel-crud-api`](https://www.github.com/S
 
 Description of how the applications integrate with the external API. -->
 
-## Installation and Usage
+## Installation
 
 To get started, clone the [`laravel-crud-api`](https://www.github.com/SantiagoCode/laravel-crud-api) repository, followed by this repository.
 
@@ -24,12 +24,10 @@ Within the project, you will find three folders, each corresponding to a differe
 
 Follow the subsequent steps within each folder to set up the respective framework:
 
-### React:
-
 Navigate to the `react` directory
 
 ```bash
-cd react
+cd [application_name]
 ```
 
 Install the dependencies
@@ -37,6 +35,8 @@ Install the dependencies
 ```bash
 npm install
 ```
+
+### React:
 
 Start the application
 
@@ -48,18 +48,6 @@ Open your browser and visit http://localhost:3000.
 
 ### Angular:
 
-Navigate to the `angular` directory
-
-```bash
-cd angular
-```
-
-Install the dependencies
-
-```bash
-npm install
-```
-
 Start the application
 
 ```bash
@@ -69,18 +57,6 @@ ng serve
 Open your browser and visit http://localhost:4200.
 
 ### Vue:
-
-Navigate to the `vue` directory
-
-```bash
-cd vue
-```
-
-Install the dependencies
-
-```bash
-npm install
-```
 
 Start the application
 
