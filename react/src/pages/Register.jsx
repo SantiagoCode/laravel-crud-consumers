@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
+import { toast } from 'react-toastify';
 import './../assets/modules/form.module.css';
 
 const Register = () => {
@@ -29,10 +30,19 @@ const Register = () => {
 			if (!response) throw new Error('No response received');
 			if (response.error) throw new Error(response.error);
 
-			window.location.href = '/login';
+			toast.success('Registered! Redirecting...', {
+				position: 'bottom-right',
+				autoClose: 1,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: false,
+				progress: 1,
+			});
+
+			setTimeout(() => (window.location.href = '/login'), 1000);
 		} catch (error) {
 			console.error(error);
-			alert('Error: ' + error.message || 'An error occurred. Please try again.');
 		}
 	};
 

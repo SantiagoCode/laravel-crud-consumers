@@ -1,5 +1,6 @@
 const URL = 'http://localhost:8000/api/students';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 const fetchApi = {
 	request: async (method, endpoint = '', id = '', data = null) => {
@@ -52,12 +53,28 @@ const handleErrors = (response) => {
 	};
 
 	if (statusMessages[response.status]) {
-		alert(statusMessages[response.status]);
-		if (response.status === 401) {
-			window.location.href = '/login';
+		toast.error(statusMessages[response.status], {
+			position: 'bottom-right',
+			autoClose: 1,
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: false,
+			draggable: false,
+			progress: 1,
+		});
+		if (response.status === 401 && !window.location.pathname.endsWith('/login')) {
+			setTimeout(() => (window.location.href = '/login')), 1000;
 		}
 	} else if (!response.ok) {
-		alert('Error desconocido. Por favor, inténtelo de nuevo mas tarde.');
+		toast.error('Error desconocido. Por favor, inténtelo de nuevo mas tarde.', {
+			position: 'bottom-right',
+			autoClose: 1,
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: false,
+			draggable: false,
+			progress: 1,
+		});
 	}
 };
 

@@ -3,6 +3,7 @@ import Global_Layout from '../components/Global_Layout.jsx';
 import { fetchApi } from './../utils/data.js';
 import Cookies from 'js-cookie';
 import './../assets/modules/form.module.css';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 	if (Cookies.get('access_token')) {
@@ -26,7 +27,17 @@ const Login = () => {
 			Cookies.set('access_token', response.access_token);
 			Cookies.set('user', JSON.stringify(response.user));
 
-			window.location.href = '/';
+			toast.success('Login successful! Redirecting...', {
+				position: 'bottom-right',
+				autoClose: 1,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: false,
+				draggable: false,
+				progress: 1,
+			});
+
+			setTimeout(() => (window.location.href = '/'), 1000);
 		} catch (error) {
 			console.error(error);
 		}
